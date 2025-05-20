@@ -32,7 +32,7 @@ def analyze_sentiment(title):
     ]
 
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="gpt-4.1",
         messages=[
             {"role": "system", "content": "You are a sentiment analyzer specifically focused on analyzing sentiment towards the product/company 'Cursor'. Analyze if the given title expresses positive, negative, or neutral sentiment about Cursor."},
             {"role": "user", "content": f"Analyze the sentiment of this title towards Cursor: {title}"}
@@ -46,14 +46,8 @@ def analyze_sentiment(title):
     return sentiment_result["sentiment"]
 
 def scroll_page(driver, scroll_pause_time=2):
-    last_height = driver.execute_script("return document.body.scrollHeight")
-    while True:
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(scroll_pause_time)
-        new_height = driver.execute_script("return document.body.scrollHeight")
-        if new_height == last_height:
-            break
-        last_height = new_height
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(scroll_pause_time)
 
 def open_browser_with_url():
     chrome_options = Options()
